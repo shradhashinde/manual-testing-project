@@ -1,0 +1,1037 @@
+
+copy
+
+
+
+nter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 8.0.27 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| gitnayk store      |
+| information_schema |
+| mysql              |
+| mytest             |
+| om                 |
+| performance_schema |
+| sakila             |
+| store              |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.13 sec)
+
+mysql> create database vivo;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> use vivo;
+Database changed
+mysql>  create table customers (
+    ->  customer_id int not null auto_increment,
+    -> customer_name varchar(100) not null,
+    -> birth_date date default null,
+    -> phone varchar (50) not null,
+    -> city varchar(50),
+    ->  primary key (customer_id));
+Query OK, 0 rows affected (0.91 sec)
+
+mysql>  insert into customers(customer_id,customer_name,birth_date,phone,city) values (01, 'ashwini_joshi','2000-10-06', '7841525874', 'nashik');
+Query OK, 1 row affected (0.11 sec)
+
+mysql>  insert into customers(customer_id,customer_name,birth_date,phone,city) values (02,'santosh_patil','1996/09/04','8044279456 ', 'dhule');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into customers(customer_id,customer_name,birth_date,phone,city) values (03,'kiran_jagtap','1992/12/10','7819329754' , 'mumbai');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into customers(customer_id,customer_name,birth_date,phone,city) values (04,'rahul_more','1988/01/12','7197257869' , 'shirpur');
+Query OK, 1 row affected (0.14 sec)
+
+mysql>  insert into customers(customer_id,customer_name,birth_date,phone,city) values (05,'priya_dhole',null,'8045279126' , 'mumbai');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from customers ;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | nashik  |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers
+    ->  where customer_id = 3 and city = mumbai;
+ERROR 1054 (42S22): Unknown column 'mumbai' in 'where clause'
+mysql> select * from customers
+    ->  where customer_id = 03 and city = 'mumbai';
++-------------+---------------+------------+------------+--------+
+| customer_id | customer_name | birth_date | phone      | city   |
++-------------+---------------+------------+------------+--------+
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754 | mumbai |
++-------------+---------------+------------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customers
+    -> where phone = '7841525874' or phone = '8045279126';
++-------------+---------------+------------+------------+--------+
+| customer_id | customer_name | birth_date | phone      | city   |
++-------------+---------------+------------+------------+--------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874 | nashik |
+|           5 | priya_dhole   | NULL       | 8045279126 | mumbai |
++-------------+---------------+------------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customers
+    -> where not city ='mumbai';
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | nashik  |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
++-------------+---------------+------------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql>  select * from customers
+    -> limit 4;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | nashik  |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
++-------------+---------------+------------+-------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> update customers
+    -> set city = pune,
+    -> where customer_id =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where customer_id =1' at line 3
+mysql>  update customers
+    -> set city = 'pune',
+    ->  where customer_id =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where customer_id =1' at line 3
+mysql>  update customers  set city = 'pune'  where customer_name = 'ashuini_joshi';
+Query OK, 0 rows affected (0.04 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from customers;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | nashik  |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update customers  set city = 'pune'  where customer_name = 'ashwini_joshi';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customers ;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.04 sec)
+
+mysql> alter table customers
+    -> rename to customers_info;
+Query OK, 0 rows affected (1.36 sec)
+
+mysql> select * from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.11 sec)
+
+
+
+mysql> create table products (
+    -> product_id int not null,
+    -> product_name varchar(50) not null,
+    -> quantity_in_stock int not null,
+    -> unit_price int not null,
+    -> primary key ( product_id ));
+Query OK, 0 rows affected (0.50 sec)
+
+mysql> insert into products (product_id, product_name, quantity_in_stock, unit_price) values (1, 'v_20', 5, 22990 );
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into products (product_id, product_name, quantity_in_stock, unit_price) values (2, 'y_12s', 10, 10990 );
+Query OK, 1 row affected (0.11 sec)
+
+mysql>  insert into products (product_id, product_name, quantity_in_stock, unit_price) values (3, 'y_20g', 08, 13990);
+Query OK, 1 row affected (0.10 sec)
+
+mysql>  insert into products (product_id, product_name, quantity_in_stock, unit_price) values (4, 'v_17pro', 7, 19990);
+Query OK, 1 row affected (0.13 sec)
+
+mysql>  insert into products (product_id, product_name, quantity_in_stock, unit_price) values (5, 'y_19',12, 14500);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from products ;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select min(unit_price) as smallestprice from products ;
++---------------+
+| smallestprice |
++---------------+
+|         10990 |
++---------------+
+1 row in set (0.04 sec)
+
+
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select avg (quantity_in_stock)
+    -> from products;
++-------------------------+
+| avg (quantity_in_stock) |
++-------------------------+
+|                  8.4000 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum (quantity_in_stock)
+    -> from products ;
+ERROR 1630 (42000): FUNCTION vivo.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select sum (unit_price) as total_sum from products ;
+ERROR 1630 (42000): FUNCTION vivo.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select sum (unit_price) as total_sum from products ;
+ERROR 1630 (42000): FUNCTION vivo.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select sum(unit_price) from products;
++-----------------+
+| sum(unit_price) |
++-----------------+
+|           82460 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql>  select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(product_nam) from products;
+ERROR 1054 (42S22): Unknown column 'product_nam' in 'field list'
+mysql>  select count(product_name) from products;
++---------------------+
+| count(product_name) |
++---------------------+
+|                   5 |
++---------------------+
+1 row in set (0.12 sec)
+
+mysql>  select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select product_name from products where product_name 'v%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''v%'' at line 1
+mysql> select * from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.04 sec)
+
+mysql> select city  from products where city ='m%';
+ERROR 1054 (42S22): Unknown column 'city' in 'field list'
+mysql>  select customer_name  from customers_info where customer_name ='%a%';
+Empty set (0.00 sec)
+
+mysql> select phone  from customers_info where phone ='78%';
+Empty set (0.00 sec)
+
+mysql>  select phone  from customers_info where phone like '78%';
++------------+
+| phone      |
++------------+
+| 7841525874 |
+| 7819329754 |
++------------+
+2 rows in set (0.00 sec)
+
+mysql>  select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select unit_price  from products where unit_price like '%99%';
++------------+
+| unit_price |
++------------+
+|      22990 |
+|      10990 |
+|      13990 |
+|      19990 |
++------------+
+4 rows in set (0.00 sec)
+
+
+mysql> desc customers_info;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| customer_id   | int          | NO   | PRI | NULL    | auto_increment |
+| customer_name | varchar(100) | NO   |     | NULL    |                |
+| birth_date    | date         | YES  |     | NULL    |                |
+| phone         | varchar(50)  | NO   |     | NULL    |                |
+| city          | varchar(50)  | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.07 sec)
+
+mysql> desc products;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| product_id        | int         | NO   | PRI | NULL    |       |
+| product_name      | varchar(50) | NO   |     | NULL    |       |
+| quantity_in_stock | int         | NO   |     | NULL    |       |
+| unit_price        | int         | NO   |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from products ;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(product_id),product_name,quantity_in_stock, unit_price from products
+    -> order by unit_price asc;
++-------------------+--------------+-------------------+------------+
+| count(product_id) | product_name | quantity_in_stock | unit_price |
++-------------------+--------------+-------------------+------------+
+|                 5 | v_20         |                 5 |      22990 |
++-------------------+--------------+-------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products
+    -> order by unit_price asc;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          5 | y_19         |                12 |      14500 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          1 | v_20         |                 5 |      22990 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> create table orders (
+    ->
+    -> order_id int(11) not null auto_increment,
+    ->  customer_id int not null ,
+    -> order_date date not null,
+    -> order_status int not null ,
+    ->  shipped_date date default null,
+    -> shipper_id int not null);
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> create table orders (
+    ->  order_id int(11) not null auto_increment,
+    -> customer_id int not null ,
+    ->  order_date date not null,
+    -> shipped_date date default null,
+    -> shipper_id int not null
+    -> ,
+    -> primary key (order_id));
+Query OK, 0 rows affected, 1 warning (0.89 sec)
+
+mysql> show warning;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'warning' at line 1
+mysql> create table orders (
+    -> order_id int(11) not null auto_increment,
+    ->  customer_id int not null ,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 4
+mysql> create table orders (
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 2
+mysql> create table orders(
+    ->  order_id int not null auto_increment,
+    -> customer_id int not null ,
+    -> order_date date not null,
+    ->  shipped_date date default null,
+    -> shipper_id int not null,
+    -> primary key (order_id));
+ERROR 1050 (42S01): Table 'orders' already exists
+mysql> drop table if already exists orders;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'already exists orders' at line 1
+mysql> DROP DATABASE IF EXISTS `store`;
+Query OK, 2 rows affected (0.63 sec)
+
+mysql> drop table if exists 'orders';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''orders'' at line 1
+mysql>
+  
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.27 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| gitnayk store      |
+| information_schema |
+| mysql              |
+| mytest             |
+| om                 |
+| performance_schema |
+| sakila             |
+| sys                |
+| vivo               |
+| world              |
++--------------------+
+10 rows in set (0.03 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use vivo;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_vivo |
++----------------+
+| customers_info |
+| products       |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc customer_info;
+ERROR 1146 (42S02): Table 'vivo.customer_info' doesn't exist
+mysql> select * from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.03 sec)
+
+mysql> CREATE TABLE `order_statuses` (^C
+mysql> create table order_statuses(
+    ->  order_status_id int not null,
+    -> name varchar(50)not null,
+    ->  primary key(order_status_id));
+Query OK, 0 rows affected (0.60 sec)
+
+mysql> inseret into order_statuses ( order_status_id ,name) values (1,'Processed');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inseret into order_statuses ( order_status_id ,name) values (1,'Processed')' at line 1
+mysql>  inseret into order_statuses ( order_status_id ,name) values (1,'processed');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inseret into order_statuses ( order_status_id ,name) values (1,'processed')' at line 1
+mysql> insert into order_statuses ( order_status_id ,name) values (1,'processed');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into order_statuses( order_status_id ,name) values (2,'shipped' );
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into order_statuses( order_status_id ,name)  values (3,'delivered');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from order_statuses;
++-----------------+-----------+
+| order_status_id | name      |
++-----------------+-----------+
+|               1 | processed |
+|               2 | shipped   |
+|               3 | delivered |
++-----------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> create table orders (
+    -> order_id int not null auto_increment,
+    -> customer_id int not null,
+    ->  order_date date not null,
+    -> status int not null ,
+    -> shipped_date date not null,
+    ->  shipper_id int default null,
+    -> primary key (order_id),
+    -> foreign key (customer_id)references customers_info (customer_id),
+    -> foreign key (order_status_id )references order_statuses (order_status_id));
+ERROR 1072 (42000): Key column 'order_status_id' doesn't exist in table
+mysql> create table orders (
+    ->  order_id int not null auto_increment,
+    ->  customer_id int not null,
+    ->  order_date date not null,
+    -> order_status_id int not null ,
+    ->  shipped_date date not null,
+    ->  shipper_id int default null,
+    ->  primary key (order_id),
+    -> foreign key (customer_id)references customers_info (customer_id),
+    ->  foreign key (order_status_id )references order_statuses (order_status_id));
+Query OK, 0 rows affected (2.27 sec)
+
+mysql> drop table if exists orders;
+Query OK, 0 rows affected (0.83 sec)
+
+mysql> create table orders (
+    ->   order_id int not null auto_increment,
+    ->   customer_id int not null,
+    ->   product_id int not null,
+    ->  order_date date not null,
+    ->   order_status_id int not null ,
+    ->   shipped_date date not null,
+    -> ^C
+mysql> create table orders (
+    -> order_id int not null auto_increment,
+    -> customer_id int not null,
+    -> product_id int not null,
+    -> order_date date not null,
+    ->  order_status_id int not null ,
+    -> shipped_date date not null,
+    -> primary key (order_id),
+    -> foreign key (customer_id)references customers_info (customer_id),
+    -> foreign key (product_id)references products_info (product_id),
+    -> foreign key (order_status_id )references order_statuses (order_status_id));
+ERROR 1824 (HY000): Failed to open the referenced table 'products_info'
+mysql>  create table orders (
+    ->  order_id int not null auto_increment,
+    -> customer_id int not null,
+    -> product_id int not null,
+    ->  order_date date not null,
+    -> order_status_id int not null ,
+    -> shipped_date date not null,
+    -> primary key (order_id),
+    -> foreign key (customer_id)references customers_info (customer_id),
+    ->  foreign key (product_id)references products (product_id),
+    ->  foreign key (order_status_id )references order_statuses (order_status_id));
+Query OK, 0 rows affected (2.07 sec)
+
+mysql> insert into order (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (1,2,1,'2020/12/05,3,'2020/12/10');
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) ' at line 1
+mysql> insert into order (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    ->  (1,2,1,'2020/12/05',3,'2020/12/10');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) ' at line 1
+mysql> insert into orders (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (1,2,1,'2020/12/05,3,'2020/12/10');
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2020/12/10');
+'' at line 2
+mysql>  insert into orders (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (1,2,1,'2020/12/05',3,'2020/12/10');
+Query OK, 1 row affected (0.20 sec)
+
+mysql> insert into orders (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (2,3,5,'2021/01/23',3,'2021/02/01');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into orders (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (3,1,2,'2021/03/15',2,'2021/03/21');
+Query OK, 1 row affected (0.13 sec)
+
+mysql>  insert into orders (order_id,customer_id,product_id,order_date,order_status_id,shipped_date) values
+    -> (4,4,1,'2021/07/10',1,'2021/07/18');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from orders;
++----------+-------------+------------+------------+-----------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date |
++----------+-------------+------------+------------+-----------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   |
++----------+-------------+------------+------------+-----------------+--------------+
+4 rows in set (0.05 sec)
+
+mysql> desc table orders;
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | orders | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    4 |   100.00 | NULL  |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.06 sec)
+
+mysql> select * from products;
++------------+--------------+-------------------+------------+
+| product_id | product_name | quantity_in_stock | unit_price |
++------------+--------------+-------------------+------------+
+|          1 | v_20         |                 5 |      22990 |
+|          2 | y_12s        |                10 |      10990 |
+|          3 | y_20g        |                 8 |      13990 |
+|          4 | v_17pro      |                 7 |      19990 |
+|          5 | y_19         |                12 |      14500 |
++------------+--------------+-------------------+------------+
+5 rows in set (0.11 sec)
+
+mysql> desc table products;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | products | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    4 |   100.00 | NULL  |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> show warning;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'warning' at line 1
+mysql> describe table products;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | products | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    4 |   100.00 | NULL  |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> desc products;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| product_id        | int         | NO   | PRI | NULL    |       |
+| product_name      | varchar(50) | NO   |     | NULL    |       |
+| quantity_in_stock | int         | NO   |     | NULL    |       |
+| unit_price        | int         | NO   |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.07 sec)
+
+mysql> desc orders;
++-----------------+------+------+-----+---------+----------------+
+| Field           | Type | Null | Key | Default | Extra          |
++-----------------+------+------+-----+---------+----------------+
+| order_id        | int  | NO   | PRI | NULL    | auto_increment |
+| customer_id     | int  | NO   | MUL | NULL    |                |
+| product_id      | int  | NO   | MUL | NULL    |                |
+| order_date      | date | NO   |     | NULL    |                |
+| order_status_id | int  | NO   | MUL | NULL    |                |
+| shipped_date    | date | NO   |     | NULL    |                |
++-----------------+------+------+-----+---------+----------------+
+6 rows in set (0.04 sec)
+
+mysql> select * from orders;
++----------+-------------+------------+------------+-----------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date |
++----------+-------------+------------+------------+-----------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   |
++----------+-------------+------------+------------+-----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table orders
+    -> add shipper_name datatype;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'datatype' at line 2
+mysql> alter table orders
+    ->  add shipper_name char(50) ;
+Query OK, 0 rows affected (1.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders;
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date | shipper_name |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   | NULL         |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   | NULL         |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   | NULL         |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   | NULL         |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+4 rows in set (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| gitnayk store      |
+| information_schema |
+| mysql              |
+| mytest             |
+| om                 |
+| performance_schema |
+| sakila             |
+| sys                |
+| vivo               |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from customer_info;
+ERROR 1146 (42S02): Table 'vivo.customer_info' doesn't exist
+mysql> select * from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.04 sec)
+
+mysql> select * from customers_info
+    -> where customer_name= 'priya_dhole';
++-------------+---------------+------------+------------+--------+
+| customer_id | customer_name | birth_date | phone      | city   |
++-------------+---------------+------------+------------+--------+
+|           5 | priya_dhole   | NULL       | 8045279126 | mumbai |
++-------------+---------------+------------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delet from customers_info
+    -> where city='shirpur';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delet from customers_info
+where city='shirpur'' at line 1
+mysql> select * from customers_info
+    ->  where customer_name= 'rahul_more';
++-------------+---------------+------------+------------+---------+
+| customer_id | customer_name | birth_date | phone      | city    |
++-------------+---------------+------------+------------+---------+
+|           4 | rahul_more    | 1988-01-12 | 7197257869 | shirpur |
++-------------+---------------+------------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> delet * from customers_info
+    -> where customer_name= 'rahul_more';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delet * from customers_info
+where customer_name= 'rahul_more'' at line 1
+mysql> delet * from customers_info table
+    -> where customer_name= 'rahul_more';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delet * from customers_info table
+where customer_name= 'rahul_more'' at line 1
+mysql> select*from customers_info;
++-------------+---------------+------------+-------------+---------+
+| customer_id | customer_name | birth_date | phone       | city    |
++-------------+---------------+------------+-------------+---------+
+|           1 | ashwini_joshi | 2000-10-06 | 7841525874  | pune    |
+|           2 | santosh_patil | 1996-09-04 | 8044279456  | dhule   |
+|           3 | kiran_jagtap  | 1992-12-10 | 7819329754  | mumbai  |
+|           4 | rahul_more    | 1988-01-12 | 7197257869  | shirpur |
+|           5 | priya_dhole   | NULL       | 8045279126  | mumbai  |
++-------------+---------------+------------+-------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delet * from customers_info where customer_name = 'rahul_more';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delet * from customers_info where customer_name = 'rahul_more'' at line 1
+mysql> delete * from customers_info where customer_name = 'rahul_more';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from customers_info where customer_name = 'rahul_more'' at line 1
+mysql>  delete from customers_info where customer_name = 'rahul_more';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`vivo`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers_info` (`customer_id`))
+mysql>
+mysql> select *from orders;
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date | shipper_name |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   | NULL         |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   | NULL         |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   | NULL         |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   | NULL         |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+4 rows in set (0.04 sec)
+
+mysql>  delete from orders where customer_id = 5;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select *from orders;
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date | shipper_name |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   | NULL         |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   | NULL         |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   | NULL         |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   | NULL         |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> desc orders;
++-----------------+----------+------+-----+---------+----------------+
+| Field           | Type     | Null | Key | Default | Extra          |
++-----------------+----------+------+-----+---------+----------------+
+| order_id        | int      | NO   | PRI | NULL    | auto_increment |
+| customer_id     | int      | NO   | MUL | NULL    |                |
+| product_id      | int      | NO   | MUL | NULL    |                |
+| order_date      | date     | NO   |     | NULL    |                |
+| order_status_id | int      | NO   | MUL | NULL    |                |
+| shipped_date    | date     | NO   |     | NULL    |                |
+| shipper_name    | char(50) | YES  |     | NULL    |                |
++-----------------+----------+------+-----+---------+----------------+
+7 rows in set (0.08 sec)
+
+mysql> alter table orders
+    -> drop foreign key(order_status_id) references orders(order_status_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(order_status_id) references orders(order_status_id)' at line 2
+mysql> alter table orders
+    ->  drop foreign key (order_status_id) references orders(order_status_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(order_status_id) references orders(order_status_id)' at line 2
+mysql> drop database if exists om;
+Query OK, 1 row affected (1.43 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| gitnayk store      |
+| information_schema |
+| mysql              |
+| mytest             |
+| performance_schema |
+| sakila             |
+| sys                |
+| vivo               |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from orders;
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date | shipper_name |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+|        1 |           2 |          1 | 2020-12-05 |               3 | 2020-12-10   | NULL         |
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   | NULL         |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   | NULL         |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   | NULL         |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+4 rows in set (0.04 sec)
+
+mysql> delete from orders where customer_id =2;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select * from orders;
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+| order_id | customer_id | product_id | order_date | order_status_id | shipped_date | shipper_name |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+|        2 |           3 |          5 | 2021-01-23 |               3 | 2021-02-01   | NULL         |
+|        3 |           1 |          2 | 2021-03-15 |               2 | 2021-03-21   | NULL         |
+|        4 |           4 |          1 | 2021-07-10 |               1 | 2021-07-18   | NULL         |
++----------+-------------+------------+------------+-----------------+--------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> create table practice ( id int not null,name varchar(10) not null);
+Query OK, 0 rows affected (1.58 sec)
+
+mysql> insert into practice (id,name) values (1,'abhi');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select from practice;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from practice' at line 1
+mysql> select * from practice;
++----+------+
+| id | name |
++----+------+
+|  1 | abhi |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> truncate table practice;
+Query OK, 0 rows affected (1.41 sec)
+
+mysql> select *from practice;
+Empty set (0.10 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
